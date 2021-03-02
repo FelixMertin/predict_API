@@ -1,6 +1,10 @@
 #pycharm
 .idea
 
+# SSL
+data/certbot/conf/
+data/certbot/www/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

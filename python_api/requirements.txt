@@ -1,7 +1,5 @@
 werkzeug==0.16.1
 spacy
-tensorflow==2.3.2
-keras
 
 requests==2.22.0
 numpy==1.18.1
