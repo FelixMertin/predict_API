@@ -1,28 +1,42 @@
 REST API Docker Compose Container with Flask-RESTplus, NGINX & SpaCy
 =========
 
-What is this for?
-------------
+## Table of contents
+1. [What is this for?](#what-is-this-for) 
+2. [SwaggerUI generated documentation](#swaggerui-generated-documentation)
+3. [Deployment guide for Ubuntu 20.04.](#deployment-guide-for-ubuntu-20.04.)
+4. [Get your domain](#get-your-domain)
+5. [Start container and initialize the certificates](#start-container-and-initialize-the-certificates)
+6. [Start the Docker Container](#start-the-docker-container)
+7. [Test and do post request](#test-and-do-post-request)
+8. [Sources](#sources)
+
+## What is this for?
 This repository aims at providing an easy-to-deploy, secured and lightweight REST API for German NLP tasks. 
 The scope is merely for personal usage and not aimed for a company case. To start with,
 there is only an endpoint providing Named Entity Recognition via SpaCy and its pretrained model de_core_news_md. 
 
 In future this repository will be expanded for my custom TensorFlow models. 
 
+## SwaggerUI generated documentation 
 
-Installation Guide for Ubuntu
-------------
+After deployment, go to _domain_. At the root of _domain_ you'll find the docu of the API. So far,
+it only documents the _domain/predict_ endpoint. 
+
+
+
+## Deployment guide for Ubuntu 20.04.
+
 
 Prerequisites is a server with docker and docker compose! You'll also need to adjust 
 the API_Key and the API_URL in the /python_api/app/.env file.
 
-Get your domain
-------------
+### Get your domain
 
 Get your domain at your favorited domain provider or go for a free one such as: https://dynv6.com/.
 
 
-!IMPORTANT! the data/nginx/nginx.conf must be adjusted as well:
+!IMPORTANT! the data/nginx/nginx.conf must be adjusted:
     
     4 $ server_name domain;
     .
@@ -33,8 +47,12 @@ Get your domain at your favorited domain provider or go for a free one such as: 
 
 
 
-Initialize the certificates
--------
+### Start container and initialize the certificates
+
+Build the three containers python_api, certbot and nginx
+
+     $ sudo docker-compose up
+     $ ctrl+c
 
 As NGINX only can start when certificates are in place a script is needed to get 
 dummy certificates and after the NGINX image is running legit certificates are pulled
@@ -49,18 +67,18 @@ Secondly, to get the certificates init-letsencrypt.sh:
      $ sudo ./init-letsencrypt.sh
 
 
-Start the Docker Container
--------
+### Start the Docker Container
 After the dynamic DNS has been adjusted to the public IPv4 of the current machine 
-and the init-letsencrypt.sh was successful:
+and the init-letsencrypt.sh was successful, you can finally start the container.
 
      $ sudo docker-compose up
      
+You should be able to visit the API docu at _domain/_
      
-Test and do post request 
--------
-
-In Python Shell with request and pickle package:
+![myImage](https://media.giphy.com/media/ely3apij36BJhoZ234/giphy-downsized.gif)
+ 
+### Test and do post request 
+In Python Shell with request and pickle package - untested:
 
     $ import requests
     $ import json
@@ -89,8 +107,7 @@ In Python Shell with request and pickle package:
     
 
 
-Sources
--------
+### Sources
 The repository is based on the following article and especially the init-letsencrypt.sh: 
 https://medium.com/@pentacent/nginx-and-lets-encrypt-with-docker-in-less-than-5-minutes-b4b8a60d3a71
 
