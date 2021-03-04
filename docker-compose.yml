@@ -6,6 +6,8 @@ services:
     restart: unless-stopped
     volumes:
       - ./python_api:/python_api
+    env_file:
+      - ./python_api/app/.env
     environment:
       - APP_NAME=predict_API
     
